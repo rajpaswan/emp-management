@@ -1,0 +1,41 @@
+<div class="form-group form-inline">
+  <button type="button" class="btn btn-secondary m-1" [routerLink]="['/add']">Add</button>
+  <input placeholder="Search..." class="form-control m-1" type="text" [formControl]="filter" />
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col" class="d-none d-sm-table-cell">DOB</th>
+      <th scope="col" class="d-none d-sm-table-cell">Salary</th>
+      <th scope="col" class="d-none d-sm-table-cell">Skills</th>
+      <th scope="col">Operations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let emp of employees | filterEmp:filter.value; let i = index">
+      <th scope="row">{{ i + 1 }}</th>
+      <td>
+        <ngb-highlight [result]="emp.name" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td class="d-none d-sm-table-cell">
+        <ngb-highlight [result]="emp.dob | date:'mediumDate'" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td class="d-none d-sm-table-cell">
+        <ngb-highlight [result]="emp.salary" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td class="d-none d-sm-table-cell">
+        <ngb-highlight [result]="emp.skills | skillSet" [term]="filter.value"></ngb-highlight>
+      </td>
+      <td>
+        <button type="button btn-block" class="close float-left" (click)="editEmp(emp.id)">
+          <i class="material-icons">edit</i>
+        </button>
+        <button type="button btn-block" class="close float-right" (click)="deleteEmp(emp.id)">
+          <i class="material-icons">close</i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
