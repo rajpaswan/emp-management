@@ -28,12 +28,12 @@
     <label for="skills">Skills</label>
     <!-- <button type="button" class="btn btn-primary m-1" (click)="addSkill()">Add</button> -->
     <span class="btn m-2"><i class="material-icons" (click)="addSkill()">control_point</i></span>
-    <div *ngFor="let skill of model.skills">
+    <div *ngFor="let skill of model.skills;let i=index">
       <!-- The repeated skill template -->
       <div class="form-inline m-1">
-        <input required type="text" type="text" class="form-control col-sm-3" [(ngModel)]="skill.name" name="skill"
+        <input required type="text" type="text" class="form-control col-sm-3" [(ngModel)]="skill.name" [name]='"skill"+i'
           placeholder="Skill" required>
-        <select class="form-control col-sm-3 ml-2" [(ngModel)]="skill.rating" name="rating" required>
+        <select class="form-control col-sm-3 ml-2" [(ngModel)]="skill.rating" [name]='"rating"+i' required>
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -49,9 +49,9 @@
     </div>
   </div>
   <!-- pic -->
-  <div class="form-group">
+  <!-- <div class="form-group">
     <label for="pic">Picture</label>
     <input type="file" class="form-control-file" id="pic" name="pic">
-  </div>
+  </div> -->
   <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
 </form>
