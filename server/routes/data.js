@@ -20,7 +20,7 @@ router.get('/:id', (req, res) => {
     }, (err, doc) => {
         if (err) {
             console.log('[data]', err.message);
-            res.send(err.message);
+            res.status(404).send(err.message);
         } else
             res.send(doc);
     });
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
     newEmp.save((err, doc) => {
         if (err) {
             console.log('[data]', err.message);
-            res.send(err.message);
+            res.status(400).send(err.message);
         } else
             res.send(doc);
     });
@@ -44,15 +44,15 @@ router.post('/', (req, res) => {
 
 router.patch('/:id', (req, res) => {
     let empId = Number.parseInt(req.params.id);
-    let patchData = req.body;
+    let patchEmp = req.body;
     Emp.findOneAndUpdate({
         id: empId
-    }, patchData, {
+    }, patchEmp, {
         new: true
     }, (err, doc) => {
         if (err) {
             console.log('[data]', err.message);
-            res.send(err.message);
+            res.status(400).send(err.message);
         } else
             res.send(doc);
     });
@@ -65,7 +65,7 @@ router.delete('/:id', (req, res) => {
     }, (err, doc) => {
         if (err) {
             console.log('[data]', err.message);
-            res.send(err.message);
+            res.status(400).send(err.message);
         } else
             res.send(doc);
     });
