@@ -12,7 +12,8 @@ This project contains two separate projects:
 
 ## Setup Client
 1. Open `client` folder
-2. Run `npm run-script build`
+2. Run `npm install`
+3. Run `npm run-script build`
 
 ## Setup Server
 1. Open `server` folder
