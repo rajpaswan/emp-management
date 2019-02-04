@@ -33,7 +33,8 @@ export class EditEmpComponent implements OnInit, OnDestroy {
   }
 
   fetchEmpById(id) {
-    fetch(`${this.url}/${id}`)
+    this.id = id;
+    fetch(`${this.url}/${this.id}`)
       .then(response => response.json())
       .catch(err => {
         console.log('error', err);
@@ -53,9 +54,9 @@ export class EditEmpComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.model.dob = new Date(this.date.year, this.date.month, this.date.day);
-    console.log(this.model);
+    console.log(JSON.stringify(this.model));
     (async () => {
-      const rawResponse = await fetch('/api/data', {
+      const rawResponse = await fetch(`${this.url}/${this.id}`, {
         method: 'PATCH',
         headers: {
           Accept: 'application/json',
@@ -63,8 +64,8 @@ export class EditEmpComponent implements OnInit, OnDestroy {
         },
         body: JSON.stringify(this.model)
       });
-      const content = await rawResponse.json();
       if (rawResponse.ok) {
+        const content = await rawResponse.json();
         this.showAlert('success', 'Emp data modified!');
       } else {
         this.showAlert('danger', 'Something went wrong!');

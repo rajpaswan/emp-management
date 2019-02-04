@@ -41,6 +41,7 @@ export class ListEmpComponent {
       })
       .then(data => {
         this.showAlert('success', 'Emp data deleted successfully!');
+        this.fetchEmps();
       });
   }
 
