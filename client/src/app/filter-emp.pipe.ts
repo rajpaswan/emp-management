@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { transformAll } from '@angular/compiler/src/render3/r3_ast';
+import { DatePipe } from '@angular/common';
 
 @Pipe({
   name: 'filterEmp'
@@ -14,8 +14,19 @@ export class FilterEmpPipe implements PipeTransform {
     return value.filter(item => {
       for (const prop in item) {
         if (item.hasOwnProperty(prop)) {
-          if (typeof item[prop] === 'string' && item[prop].toLowerCase().includes(query)) {
+          if (typeof item[prop] === 'number' && item[prop].toString().includes(query)) {
             return true;
+          } else if (typeof item[prop] === 'string') {
+            const date = (new Date(item[prop])).toString();
+            if (date !== 'Invalid Date') {
+              const dp = new DatePipe('en-us');
+              const d = dp.transform(date, 'mediumDate');
+              if (d.toLowerCase().includes(query)) {
+                return true;
+              }
+            } else if (item[prop].toLowerCase().includes(query)) {
+              return true;
+            }
           } else if (Array.isArray(item[prop]) && this.transform(item[prop], query).length > 0) {
             return true;
           }
