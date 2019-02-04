@@ -22,6 +22,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.0.2",
     "@types/jquery": "^3.3.29",
     "core-js": "^2.5.4",
+    "jquery": "^3.3.1",
     "rxjs": "~6.4.0",
     "tslib": "^1.9.0",
     "zone.js": "~0.8.26"
