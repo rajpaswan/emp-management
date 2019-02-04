@@ -1,41 +1,55 @@
 <div class="form-group form-inline">
   <button type="button" class="btn btn-secondary m-1" [routerLink]="['/']">Back</button>
 </div>
-<form [ngFormOptions]="{updateOn: 'blur'}">
+<form (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()">
   <!-- name -->
   <div class="form-group">
     <label for="name">Name</label>
-    <input type="text" class="form-control" [(ngModel)]="model.name" name="name" required>
+    <input type="text" class="form-control" [(ngModel)]="model.name" name="name" required #name="ngModel">
+    <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+      <div *ngIf="name.errors.required">
+        Name is required.
+      </div>
+    </div>
   </div>
   <!-- dob -->
   <div class="form-group">
     <label for="dob">DOB</label>
     <div class="input-group">
       <input class="form-control" placeholder="yyyy-mm-dd" [(ngModel)]="date" ngbDatepicker #d="ngbDatepicker" name="dob"
-        required>
+        required #dob="ngModel">
       <div class="input-group-append">
         <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
-            <i class="material-icons">date_range</i>
-        </button>
+          <i class="material-icons">date_range</i></button>
+      </div>
+    </div>
+    <div *ngIf="dob.invalid && (dob.dirty || dob.touched)" class="alert alert-danger">
+      <div *ngIf="dob.errors.required">
+        DOB is required.
       </div>
     </div>
   </div>
   <!-- salary -->
   <div class="form-group">
     <label for="salary">Salary</label>
-    <input type="text" class="form-control" [(ngModel)]="model.salary" name="salary" required>
+    <input type="text" class="form-control" [(ngModel)]="model.salary" name="salary" required #salary="ngModel">
+    <div *ngIf="salary.invalid && (salary.dirty || salary.touched)" class="alert alert-danger">
+      <div *ngIf="salary.errors.required">
+        Salary is required.
+      </div>
+    </div>
   </div>
   <!-- skills -->
   <div class="form-group">
     <label for="skills">Skills</label>
     <!-- <button type="button" class="btn btn-primary m-1" (click)="addSkill()">Add</button> -->
     <span class="btn m-2"><i class="material-icons" (click)="addSkill()">control_point</i></span>
-    <div *ngFor="let skill of model.skills;let i=index">
+    <div *ngFor="let s of model.skills;let i=index">
       <!-- The repeated skill template -->
-      <div class="form-inline m-1">
-        <input required type="text" type="text" class="form-control col-sm-3" [(ngModel)]="skill.name" [name]='"skill"+i'
-          placeholder="Skill" required>
-        <select class="form-control col-sm-3 ml-2" [(ngModel)]="skill.rating" [name]='"rating"+i' required>
+      <div class="form-inline mb-1 mt-1">
+        <input required type="text" type="text" class="form-control col-sm-6" [(ngModel)]="s.name" [name]='"s"+i'
+          placeholder="Skill" required #skill="ngModel">
+        <select class="form-control col-sm-6" [(ngModel)]="s.rating" [name]='"r"+i' required>
           <option>1</option>
           <option>2</option>
           <option>3</option>
@@ -48,12 +62,17 @@
           <option>10</option>
         </select>
       </div>
+      <div *ngIf="skill.invalid && (skill.dirty || skill.touched)" class="alert alert-danger">
+        <div *ngIf="skill.errors.required">
+          Skill is required.
+        </div>
+      </div>
     </div>
   </div>
   <!-- pic -->
   <!-- <div class="form-group">
-    <label for="pic">Picture</label>
-    <input type="file" class="form-control-file" id="pic" name="pic">
-  </div> -->
-  <button type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+      <label for="pic">Picture</label>
+      <input type="file" class="form-control-file" id="pic" name="pic">
+    </div> -->
+  <button type="submit" class="btn btn-primary" [disabled]="name.invalid || salary.invalid || dob.invalid">Update</button>
 </form>
