@@ -1,12 +1,16 @@
 version: '3.7'
 
 services:
-  database:
-    image: mongo
-    ports:
-      - "27017:27017"
 
   express:
     build: .
     ports:
-      - "3000:3000"
+      - 3000:3000
+    environment:
+      - DB_HOST=database
+
+  database:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 27017:27017
