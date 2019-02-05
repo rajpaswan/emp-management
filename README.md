@@ -1,11 +1,11 @@
 ## EMP MANAGEMENT
------------------
 
 This project contains two separate projects:
 1. **server**: nodejs server
 2. **client**: angular client
 
 #### Deploy using npm
+Edit `server/.env` to update mongodb details.
 ```
 # build client
 cd client
